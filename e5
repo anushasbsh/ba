@@ -1,0 +1,53 @@
+# ---- EXPERIMENT 5: Dimensionality Reduction (PCA, KPCA, SVD) ----
+
+# Step 1: Install required packages (run only once)
+install.packages("ggplot2")
+install.packages("kernlab")
+install.packages("ggfortify")
+
+# Step 2: Load packages
+library(ggplot2)
+library(kernlab)
+library(ggfortify)
+
+# Step 3: Load dataset and standardize it
+data(mtcars)       # built-in dataset
+df <- scale(mtcars)  # scaling makes all variables comparable
+
+# ---- PCA (Principal Component Analysis) ----
+pca_result <- prcomp(df, scale. = TRUE)   # perform PCA
+summary(pca_result)                       # see variance explained
+
+# PCA visualization
+autoplot(pca_result, data = as.data.frame(df),
+         loadings = TRUE,
+         loadings.label = TRUE,
+         loadings.colour = "blue",
+         loadings.label.size = 4,
+         main = "PCA Biplot - mtcars")
+
+# ---- KPCA (Kernel PCA) ----
+kpca_result <- kpca(~., data = as.data.frame(df), kernel = "rbfdot")  # RBF kernel
+kpca_df <- as.data.frame(rotated(kpca_result))   # get rotated data
+kpca_df$Car <- rownames(df)
+
+# KPCA visualization
+ggplot(kpca_df, aes(x = V1, y = V2, label = Car)) +
+  geom_point(color = "steelblue", size = 3) +
+  geom_text(vjust = -0.5, size = 3) +
+  theme_minimal() +
+  labs(title = "Kernel PCA (First 2 Components) - mtcars",
+       x = "PC1", y = "PC2")
+
+# ---- SVD (Singular Value Decomposition) ----
+svd_result <- svd(df)
+svd_result$d   # singular values
+
+svd_df <- data.frame(U1 = svd_result$u[,1], U2 = svd_result$u[,2], Car = rownames(df))
+
+# SVD visualization
+ggplot(svd_df, aes(x = U1, y = U2, label = Car)) +
+  geom_point(color = "darkgreen", size = 3) +
+  geom_text(vjust = -0.5, size = 3) +
+  theme_minimal() +
+  labs(title = "SVD Components - mtcars", x = "U1", y = "U2")

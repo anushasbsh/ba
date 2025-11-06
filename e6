@@ -1,0 +1,32 @@
+# ---- EXPERIMENT 6: Bivariate & Multivariate Analysis ----
+
+# Step 1: Load dataset
+data(iris)    # built-in dataset
+View(iris)    # optional: opens a spreadsheet view
+
+# Step 2: Take only numeric columns
+df <- iris[, -5]   # removes Species column for numeric analysis
+
+# Step 3: Bivariate Analysis
+# Check correlation between numeric variables
+cor_matrix <- cor(df)
+print(cor_matrix)
+
+# Simple scatterplot between two variables
+plot(df$Sepal.Length, df$Petal.Length,
+     col = iris$Species,
+     main = "Bivariate Analysis: Sepal.Length vs Petal.Length",
+     xlab = "Sepal Length",
+     ylab = "Petal Length",
+     pch = 19)
+
+# Step 4: Multivariate Analysis
+# Scatterplot matrix (multiple pairwise comparisons)
+pairs(df, col = iris$Species,
+      main = "Multivariate Scatterplot Matrix")
+
+# Step 5: MANOVA (Multivariate Analysis of Variance)
+fit <- manova(cbind(Sepal.Length, Sepal.Width,
+                    Petal.Length, Petal.Width) ~ Species,
+              data = iris)
+summary(fit)

@@ -1,0 +1,8 @@
+Total_Marks =
+Sheet1[English] +
+Sheet1[Math] +
+Sheet1[Science] +
+Sheet1[SocialScience] +
+Sheet1[Tamil]
+
+Average_Marks = Sheet1[Total_Marks] / 5

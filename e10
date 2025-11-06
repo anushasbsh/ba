@@ -1,0 +1,4 @@
+Total_Sales = SUM(Sheet1[Gross Sales])
+Total_Profit = SUM(Sheet1[Profit])
+Profit_Per_Unit = DIVIDE(SUM(Sheet1[Profit]), SUM(Sheet1[Units Sold]), 0)
+Profit_Percentage = DIVIDE(SUM(Sheet1[Profit]), SUM(Sheet1[Gross Sales]), 0) * 100

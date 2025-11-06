@@ -1,0 +1,47 @@
+# ---- EXPERIMENT 7: Plotting Functions ----
+
+# Step 1: Install and load ggplot2
+install.packages("ggplot2")  # run once
+library(ggplot2)
+
+# Step 2: Load the dataset
+data(airquality)
+df <- na.omit(airquality)   # removes rows with missing values
+
+# Step 3: Basic plots in R ----
+
+# Histogram - temperature distribution
+hist(df$Temp,
+     main = "Histogram of Temperature",
+     xlab = "Temperature (°F)",
+     col = "skyblue",
+     border = "white")
+
+# Boxplot - Ozone levels
+boxplot(df$Ozone,
+        main = "Boxplot of Ozone Levels",
+        col = "orange")
+
+# Density Plot - Wind speed
+plot(density(df$Wind),
+     main = "Density Plot of Wind Speed",
+     xlab = "Wind Speed (mph)",
+     col = "darkgreen",
+     lwd = 2)
+
+# Barplot - Number of records per month
+month_count <- table(df$Month)
+barplot(month_count,
+        main = "Barplot of Months",
+        xlab = "Month",
+        ylab = "Count",
+        col = c("red","blue","green","purple","cyan"))
+
+# Step 4: ggplot2 Scatter Plot ----
+ggplot(df, aes(x = Temp, y = Ozone, color = factor(Month))) +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(title = "Scatter Plot of Ozone vs Temperature by Month",
+       x = "Temperature (°F)",
+       y = "Ozone (ppb)",
+       color = "Month")

@@ -6,3 +6,8 @@ Sheet1[SocialScience] +
 Sheet1[Tamil]
 
 Average_Marks = Sheet1[Total_Marks] / 5
+
+Highest_Score = MAXX(Sheet1, [Total_Marks])
+
+Top_Scorer = VAR TopStudent = TOPN(1, Sheet1, Sheet1[Total_Marks], DESC) RETURN
+CONCATENATEX(TopStudent, Sheet1[Name])
